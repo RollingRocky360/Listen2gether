@@ -1,0 +1,64 @@
+<div id="currentPlaying" *ngIf="!song else noSkeleton" @fadeInOut>
+    <div id="currentThumbnail"></div>
+    <div id="currentDetails">
+        <p [style.width.%]="72"></p>
+        <p [style.width.%]="91"></p>
+        <p [style.width.%]="40"></p>
+    </div>
+</div>
+
+<ng-template #noSkeleton>
+    <app-song 
+        *ngIf="alternator > 0 else noSkeleton2"
+        [style.width.%]="35" 
+        [style.padding]="0"
+        [style.margin]="0"
+        [song]="song!"
+        id="detailedCurrentPlaying"
+        @fadeInOut>
+    </app-song>
+</ng-template>
+
+<ng-template #noSkeleton2>
+    <app-song 
+        [style.width.%]="35" 
+        [style.padding]="0"
+        [style.margin]="0"
+        [song]="song!"
+        id="detailedCurrentPlaying"
+        @fadeInOut>
+    </app-song>
+</ng-template>
+
+<div id="progress-container">
+    <audio 
+        #audio
+        [src]="song?.url" 
+        (ended)="barWidth=0; nextSong()"
+        (timeupdate)="barWidth = audio.currentTime * 100 / audio.duration"
+        (canplay)="readyToPlay()">
+    </audio>
+
+    <button id="play" *ngIf="(paused$ | async) else elseBlock" (click)="play()" [disabled]="!song">
+        <span class="material-icons">play_arrow</span>
+    </button>
+
+    <ng-template #elseBlock>
+        <button id="pause" (click)="pause()" [disabled]="!song">
+            <span class="material-icons">pause</span>
+        </button>
+    </ng-template>
+
+    <button id="skip" (click)="barWidth=0; skip()" [disabled]="!song">
+        <span class="material-icons">skip_next</span>
+    </button>
+
+    <div id="bar-container">
+        <div id="bar" [style.width.%]="barWidth">
+        </div>
+    </div>
+
+    <p id="time">
+        {{ audio.currentTime | time }}
+    </p>
+</div>

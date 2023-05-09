@@ -1,0 +1,12 @@
+
+<img [src]="song.thumbnailUrl" alt="" id="thumbnail">
+<div id="details">
+    <p id="title">{{ song.name }}</p>
+    <p id="author">{{ song.author }}</p>
+    <p id="dur">{{ song.dur | time }}</p>
+    <div id="delete-container" *ngIf="deletable">
+        <button (click)="removeEvent.emit(song)">
+            <span class="material-icons">delete</span>
+        </button>
+    </div>
+</div>

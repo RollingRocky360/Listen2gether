@@ -1,0 +1,116 @@
+:host {
+    width: 99%;
+    height: 96vh;
+    display: grid;
+    place-items: center;
+}
+
+form {
+    width: 23rem;
+    padding: 1rem;  
+
+    background-color: #242731;
+    box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.2);
+    border-radius: .5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+
+    transition: none;
+}
+
+#greeting {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+p {
+    margin: 0;
+}
+
+#greeting p { 
+    margin: 0.4rem auto;
+    width: 100%;
+    text-align: center;
+    font-weight: 600;
+}
+
+#main-greeting {
+    font-size: 1.4rem;
+}
+#sub-greeting {
+    font-size: 1rem;
+}
+
+.item {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+label {
+    display: inline-block;
+    font-size: .8rem;
+    font-weight: 600;
+}
+
+input {
+    all: unset;
+    width: 100%;
+    height: 2.5rem;
+
+    box-sizing: border-box;
+    margin: .3rem 0;
+    padding: 0 .5rem;
+    background-color: #17191E;
+}
+
+#actions {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+button {
+    all: unset;
+    cursor: pointer;
+    transition: .1s;
+}
+
+#main-action:active {
+    transform: scale(.98);
+}
+
+#main-action {
+    width: 50%;
+    height: 2.5rem;
+    border: 1.5px solid #a7acb8;
+    margin: 1rem 0;
+    font-size: 1rem;
+    border-radius: .3rem;
+    text-align: center;
+    font-weight: 600;
+    background-color: #a7acb8;
+    color:#242731;
+}
+
+#alt-action {
+    text-decoration: underline;
+}
+
+.error {
+    display: inline-block;
+    margin-left: .2rem;
+    color: rgb(255, 95, 95);
+    font-size: .8rem;
+    font-style: italic;
+}
+
+

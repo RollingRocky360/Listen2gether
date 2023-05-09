@@ -1,0 +1,97 @@
+
+
+.material-icons {
+    font-family: 'Material Icons';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    /* Preferred icon size */
+    display: inline-block;
+    line-height: 1;
+    text-transform: none;
+    letter-spacing: normal;
+    word-wrap: normal;
+    white-space: nowrap;
+    direction: ltr;
+
+    /* Support for all WebKit browsers. */
+    -webkit-font-smoothing: antialiased;
+    /* Support for Safari and Chrome. */
+    text-rendering: optimizeLegibility;
+
+    /* Support for Firefox. */
+    -moz-osx-font-smoothing: grayscale;
+
+    /* Support for IE. */
+    font-feature-settings: 'liga';
+
+    margin: 0 5px;
+}
+
+* {
+    transition: .1s;
+}
+
+body {
+    background-color: #17191E;
+    color: #a7acb8;
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+}
+
+.nonstatic:hover {
+    background-color: rgb(128, 128, 128, .1);
+    cursor: pointer;
+}
+
+.container {
+    height: 85%;
+    width: 95%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+    background-color: #242731;
+    padding: .5rem .5rem 1rem .5rem;
+    border-radius: .5rem;
+    box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.2);
+    position: relative;
+}
+
+.container-title {
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 90%;
+    height: 2rem;
+    font-weight: 700;
+    position: relative;
+}
+
+.input-container {
+    width: 95%;
+    height: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: .2rem 0;
+    border-bottom: 1px solid rgba(114, 118, 129, 0.4);
+    margin: 0 auto;
+    position: relative;
+}
+
+.container::after, .container-title::before, #search-container::before {
+    content: '';
+    left: -5rem; right: -5rem;
+    height: 1.5rem;
+    position: absolute;
+    z-index: 1;
+}
+.container::after {
+    background: linear-gradient(0deg, #242731 32%, rgba(45, 48, 57, 0) 100%);
+    bottom: .5rem;
+}
+.container-title::before, #search-container::before {
+    background: linear-gradient(180deg, #242731 32%, rgba(45, 48, 57, 0) 100%);
+    bottom: -1.5rem;
+}

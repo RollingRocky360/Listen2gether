@@ -1,0 +1,33 @@
+:host {
+    justify-self: end;
+    justify-content: flex-start;
+}
+
+input {
+    all: unset;
+    width: 95%;
+    height: 100%;
+    box-sizing: border-box;
+    padding: 0 .5rem;
+}
+input::placeholder {
+    color: rgba(114, 118, 129, 0.6);
+}
+input:focus::placeholder {
+    color: transparent;
+}
+
+#results {
+    height: 90%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    scrollbar-width: 0px;
+    overflow-y: auto;
+    padding: 1.0rem 0;
+}
+
+#results::-webkit-scrollbar {
+    display: none;
+}

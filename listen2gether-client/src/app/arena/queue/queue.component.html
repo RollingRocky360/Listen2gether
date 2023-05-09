@@ -1,0 +1,16 @@
+<p class="container-title">
+    <span class="material-icons">
+        queue_music
+    </span>
+    Queue
+</p>
+<div id="queue" class="song-list">
+    <app-song 
+        *ngFor="let song of queue$ | async" 
+        class="nonstatic"
+        [song]="song"
+        [deletable]="true"
+        (removeEvent)="remove($event)"
+        [@shrinkOut]="'in'">
+    </app-song>
+</div>

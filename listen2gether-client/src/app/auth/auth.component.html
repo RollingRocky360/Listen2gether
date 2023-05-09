@@ -1,0 +1,76 @@
+<form autocomplete="off" [style.height.rem]="registering ? 28 : 25">
+    <div id="greeting">
+        <p id="main-greeting">Welcome to Listen2gether!</p>
+        <p id="sub-greeting">{{ registering ? 'Sign Up' : 'Login' }} to continue</p>
+    </div>
+
+    <div class="item">
+        <div class="item-heading">
+            <label 
+                for="email" 
+                [style.color]="errors.email ? 'rgb(255, 95, 95)': 'inherit'">
+            EMAIL
+            </label>
+            <p *ngIf="errors.email" class="error">{{ errors.email }}</p>
+        </div>
+        <input 
+            type="email" 
+            id="email" 
+            required 
+            name="email"
+            [(ngModel)]="email">
+    </div>
+
+     <div class="item" *ngIf="registering">
+        <div class="item-heading">
+            <label 
+                for="Username" 
+                [style.color]="errors.username ? 'rgb(255, 95, 95)': 'inherit'">
+            USERNAME
+            </label>
+            <p *ngIf="errors.username" class="error">{{ errors.username }}</p>
+        </div>
+        <input 
+            type="text" 
+            id="username" 
+            required 
+            name="username"
+            [(ngModel)]="username">
+    </div>
+
+    <div class="item"> 
+        <div class="item-heading">
+            <label 
+                for="email" 
+                [style.color]="errors.password ? 'rgb(255, 95, 95)': 'inherit'">
+            PASSWORD
+            </label>
+            <p *ngIf="errors.password" class="error">{{ errors.password }}</p>
+        </div>
+        <input 
+            type="password" 
+            id="password" 
+            minlength="4" 
+            required 
+            name="password"
+            [(ngModel)]="password">
+    </div>
+
+    <div id="actions" *ngIf="!registering else logintemplate">
+        <button id="main-action" (click)="login()">Login</button>
+        <span>
+            Don't have an account? 
+            <button id="alt-action" (click)="registering=true">Register</button>
+        </span>
+    </div>
+
+    <ng-template #logintemplate>
+        <div id="actions">
+            <button id="main-action" (click)="signup()">Sign Up</button>
+            <span>
+                Already have an account?
+                <button id="alt-action" (click)="registering=false">Login</button>
+            </span>
+        </div>
+    </ng-template>
+</form>

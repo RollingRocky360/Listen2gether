@@ -1,0 +1,20 @@
+
+<div class="input-container" id="search-container">
+    <span class="material-icons">
+        search
+    </span>
+    <input 
+        (keyup)="search($event)" 
+        [(ngModel)]="keyWord" 
+        placeholder="Search YouTube"
+        spellcheck="false">
+</div>
+
+<div id="results" [@wave]="(searchResults$ | async)!.length ? 'added' : 'removed'">
+    <app-song
+        *ngFor="let song of searchResults$ | async"
+        class="nonstatic" 
+        [song]="song"
+        (click)="add(song)">
+    </app-song>
+</div>

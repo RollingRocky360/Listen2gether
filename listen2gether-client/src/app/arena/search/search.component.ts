@@ -1,0 +1,76 @@
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+
+import { PlayerService } from '../../services/player.service';
+import { SocketService } from '../../services/socket.service';
+
+import { BehaviorSubject } from 'rxjs'
+
+import { Song } from '../../interfaces/song';
+import { query, stagger, style, transition, trigger, animate } from '@angular/animations';
+
+@Component({
+  selector: 'app-search',
+  templateUrl: './search.component.html',
+  styleUrls: ['./search.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  animations: [
+    trigger('wave', [
+      transition('* => added', [
+        query('.nonstatic', [
+          style({ opacity: 0 }),
+          stagger(15, [
+            animate('250ms ease-out', style({ opacity: '*' }))
+          ])
+        ])
+      ]),
+      transition('added => *', [
+        query('.nonstatic', [
+          style({ opacity: '*' }),
+          stagger(15, [
+            animate('250ms ease-out', style({ opacity: 0 }))
+          ])
+        ])
+      ])
+    ])
+  ]
+})
+export class SearchComponent {
+  keyWord = '';
+  searchResults$ = new BehaviorSubject<Song[]>([]) ;
+
+  ngOnInit() {
+    this.socketService.socket$.subscribe((msg: any) => {
+      console.log(msg);
+
+      if (msg.type === 'add') {
+        console.log('adding');
+        this.playerService.add(msg.result);
+      } else if (msg.type === 'search-results') {
+        this.searchResults$.next(msg.result);
+      }
+      
+    })
+  }
+
+  search(e: KeyboardEvent) {
+    
+    if (e.code !== 'Enter') return;
+    if (!this.keyWord.length) return;
+
+    console.log('search')
+    this.searchResults$.next([]);
+    this.socketService.socket.emit('search', { keyword: this.keyWord });
+  }
+
+  add(song: Song) {
+    this.keyWord = '';
+    this.searchResults$.next([]);
+
+    this.socketService.socket.emit('add', { url: song.url });
+  }
+
+  constructor(
+    private playerService: PlayerService,
+    private socketService: SocketService
+  ) { }
+}

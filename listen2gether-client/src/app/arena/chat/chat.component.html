@@ -1,0 +1,35 @@
+<p class="container-title">
+    <span class="material-icons" style="font-size: 1.3em;">
+        chat
+    </span>
+    Chat
+</p>
+
+<div id="messages">
+    <ng-template ngFor let-msg [ngForOf]="messages$ | async">
+        <div 
+            *ngIf="msg.noDetails else detailed" 
+            class="message-nodetails"
+            @enterSmooth >
+            <p class="content">{{ msg.message }}</p>
+        </div>
+        <ng-template #detailed>
+            <div class="message" @enterSmooth>
+                <div class="pfp">{{ msg.username[0] }}</div>
+                <p class="username">{{ msg.username }}</p>
+                <p class="content">{{ msg.message }}</p>
+            </div>
+        </ng-template>
+    </ng-template>
+</div>
+
+<div class="input-container">
+    <span class="material-icons" [style.opacity]=".7">
+        send
+    </span>
+    <input 
+        (keyup)="send($event)" 
+        [(ngModel)]="message" 
+        placeholder="Type Message"
+        spellcheck="false">
+</div>

@@ -1,0 +1,14 @@
+<div id="connected" (click)="participantListExpanded = !participantListExpanded">
+    <div id="expanded-list" *ngIf="participantListExpanded && participants.length" @fadeInOut>
+        <div *ngFor="let participant of participants$ | async" class="participant">
+            <div class="pfp">{{ participant.username[0] }}</div>
+            <p class="username">{{ participant.username }}</p>
+        </div>
+    </div>
+
+    <div class="u-pfp-container" *ngFor="let participant of (participants$ | async)!.slice(0,3)">
+        <div class="u-pfp">{{ participant.username[0] }}</div>
+    </div>
+    
+    <p *ngIf="!participants.length" style="margin: 0; text-align: center;">No Friends? 🫵😂</p>
+</div>

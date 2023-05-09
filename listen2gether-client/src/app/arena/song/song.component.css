@@ -1,0 +1,81 @@
+:host {
+    width: 90%;
+    aspect-ratio: 4;
+    margin: 0 auto;
+    display: inline-grid;
+    grid-template-columns: 35% 1fr;
+    column-gap: .7rem;
+    padding: 0 .5rem;
+    align-items: center;
+    border-radius: .3rem;
+    position: relative;
+}
+
+#thumbnail {
+    width: 100%;
+    border-radius: 5px;
+    background-color: #a5abbc;
+}
+
+#details {
+    height: 90%;
+    width: 100%;
+    padding: .5rem 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: .3rem;
+}
+
+#title {
+    font-size: .9rem;
+    height: 1rem;
+    width: 100%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    margin: 0;
+}
+
+#author, #dur {
+    height: .8rem;
+    width: 100%;
+    font-size: .7rem;
+    vertical-align: center;
+    overflow: hidden;
+    width: 100%;
+    margin: 0;
+}
+
+:host:hover #delete-container {
+    opacity: 1;
+}
+
+#delete-container {
+    position: absolute;
+    opacity: 0;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    right: 0;
+    height: 100%;
+    width: 25%;
+    border-radius: .3rem;
+    background: linear-gradient(90deg, rgba(37, 37, 38, 0) 0%, rgba(45, 48, 57, 1) 40%);
+}
+
+#delete-container button {
+    all: unset;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 .75rem;
+}
+
+#delete-container button:hover span {
+    color: #a5abbc;
+}
+
+
+
+
+

@@ -3,19 +3,60 @@
     <app-queue class="container"></app-queue>
     <app-chat class="container"></app-chat>
     <app-progress></app-progress>
-    <app-options></app-options>
+    <app-options (leaveEvent)="room = ''"></app-options>
 </ng-template>
 
 <ng-template [ngIf]="!room">
-    <div id="create-join">
-        <p id="instruction">Join a room by entering its 4-digit code or Create a new one</p>
-        <input [(ngModel)]="inputRoom" id="inputRoom" placeholder="Enter Room Code" autocomplete="off">
-        <div id="button-container">
-            <button id="join" (click)="joinRoom()">Join</button>
-            <p id="or">OR</p>
-            <button id="create" (click)="createRoom()">Create</button>
+    <div id="front-page">
+        <div id="profile">
+            <input 
+                type="file" 
+                name="pfp" 
+                style="display: none;" 
+                #pfpInput
+                (change)="onPfpAdd($event);"
+                >
+            <div id="pfp-container">
+                <div id="underlay">
+                    <button type="button" (click)="pfpInput.click()" id="addPfp">
+                        <span class="material-icons" style="font-size: 2.5rem;">
+                            add_photo_alternate
+                        </span>
+                    </button>
+                    <button type="button" (click)="deletePfp()" id="delPfp">
+                        <span class="material-icons" style="font-size: 2.5rem;">
+                            delete
+                        </span>
+                    </button>
+                </div>
+                <div id="pfp" *ngIf="!user!.pfp else imgpfp">
+                    {{ user!.username[0] }}
+                </div>
+                <ng-template #imgpfp>
+                    <img [src]="user!.pfp" alt="" id="pfp">
+                </ng-template>
+            </div>
+            <input 
+                autocomplete="off"
+                spellcheck="false"
+                id="username" 
+                type="text" 
+                [(ngModel)]="username" 
+                (keyup)="onUsernameChange($event)"
+                >
+
         </div>
-        <p id="error" *ngIf="error$ | async as error" @fadeInOut>{{ error }}</p>
+
+        <div id="create-join">
+            <p id="instruction">Join a room by entering its 4-digit code or <br>Create a new one</p>
+            <input [(ngModel)]="inputRoom" id="inputRoom" placeholder="Enter Room Code" autocomplete="off">
+            <div id="button-container">
+                <button id="join" (click)="joinRoom()">Join</button>
+                <p id="or">OR</p>
+                <button id="create" (click)="createRoom()">Create</button>
+            </div>
+            <p id="error" *ngIf="error$ | async as error" @fadeInOut>{{ error }}</p>
+        </div>
     </div>
 </ng-template>
 

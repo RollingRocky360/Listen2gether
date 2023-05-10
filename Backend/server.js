@@ -1,10 +1,11 @@
 const SECRET = 'rThcexYrtlHBRQ'
-const HOST = '192.168.240.136'
+const HOST = 'localhost'
 
 
 const express = require('express')
 const cors = require('cors')
-
+const multer = require('multer')
+const sharp = require('sharp')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 
@@ -15,6 +16,7 @@ const client = new MongoClient(db_uri);
 const db = client.db('test');
 const users = db.collection('users');
 
+const upload = multer();
 const app = express()
 
 
@@ -42,10 +44,7 @@ app.get('/login', async (req, res) => {
         return;
     }
 
-    console.log('here: ', id);
-
     const { password, ...user} = await users.findOne({ _id: new ObjectId(id) });
-    console.log(user);
     res.json(user);
 })
 
@@ -112,6 +111,74 @@ app.post('/signup', async (req, res) => {
     const token = jwt.sign({ id: insertedId.toString() }, SECRET);
 
     res.json({ ...user, token });
+})
+
+app.post('/pfp-upload', upload.single('pfp'), async (req, res) => {
+    const token = req.headers.authorization.split(' ')[1];
+    let id;
+
+    try {
+        id = jwt.verify(token, SECRET);
+    } catch(err) {
+        res.status(403).json({
+            error: 'access forbidden'
+        });
+        return;
+    }
+
+    const img = (
+        await sharp(req.file.buffer)
+                .resize(100, 100)
+                .toFormat('jpg')
+                .toBuffer()
+    ).toString('base64');
+
+    const pfpEncoded = 'data:image/jpg;base64, ' + img;
+    await users.updateOne({ _id: new ObjectId(id) }, { $set: { pfp: pfpEncoded }});
+
+    const {password, ...user} = await users.findOne({ _id: new ObjectId(id) });
+    console.log('file = ', pfpEncoded.length);
+    res.json(user);
+})
+
+app.post('/pfp-delete', async (req, res) => {
+    const token = req.headers.authorization.split(' ')[1];
+    let id;
+
+    try {
+        id = jwt.verify(token, SECRET);
+    } catch(err) {
+        res.status(403).json({
+            error: 'access forbidden'
+        });
+        return;
+    }
+
+    await users.updateOne({ _id: new ObjectId(id) }, { $set: { pfp: null }});
+
+    const {password, ...user} = await users.findOne({ _id: new ObjectId(id) });
+    res.json(user);
+})
+
+app.post('/username-update', async (req, res) => {
+    
+    const token = req.headers.authorization.split(' ')[1];
+    let id;
+
+    try {
+        id = jwt.verify(token, SECRET);
+    } catch(err) {
+        res.status(403).json({
+            error: 'access forbidden'
+        });
+        return;
+    }
+
+    const { username } = req.body;
+    await users.updateOne({ _id: new ObjectId(id) }, { $set: { username }});
+
+    const {password, ...user} = await users.findOne({ _id: new ObjectId(id) });
+    res.json(user);
 })
 
 app.listen(3000, HOST)

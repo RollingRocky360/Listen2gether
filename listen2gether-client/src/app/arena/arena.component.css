@@ -8,11 +8,24 @@
     gap: 2rem;
     overflow: hidden;
     align-items: end;
+    justify-content: space-around;
 }
 
 #instruction {
     font-weight: 600;
     font-size: 1.3rem;
+    text-align: center;
+    line-height: 1.7rem;
+}
+
+#front-page {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    grid-column: 1/4;
+    grid-row: 1/3;
+    justify-content: center;
+    align-items: center;
 }
 
 #button-container {
@@ -62,10 +75,8 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 100%;
+    width: 50%;
     height: 100%;
-    grid-row: 1/4;
-    grid-column: 1/4;
 }
 
 button {
@@ -88,4 +99,80 @@ button:hover {
 
 button:active {
     transform: scale(.99)
+}
+
+#profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 35%;
+    height: 100%;
+}
+
+#profile #pfp-container{
+    width: 9rem;
+    aspect-ratio: 1;
+    position: relative;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+}
+
+#profile #pfp {
+    width: 9rem;
+    aspect-ratio: 1;
+    background-color: #afb2ba;
+    color: #242731;
+    font-size: 4rem;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    position: relative;
+}
+
+#profile #pfp-container #underlay {
+    opacity: 0;
+    z-index: 4;
+    border-radius: 50%;
+    padding: .2rem;
+    width: 100%;
+    height: 100%;
+    transition: .2s;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #a7acb8;
+    backdrop-filter: blur(3px);
+}
+
+#profile button {
+    all: unset;
+    cursor: pointer;
+    transition: .2s;
+}
+#profile button:hover {
+    filter: brightness(1.3);
+}
+
+#profile #pfp-container:hover #underlay {
+    opacity: 1;
+}
+
+#profile #username {
+    all: unset;
+    font-size: 1.8rem;
+    margin: 1.4rem 0 0 0;
+    text-align: center;
+    background-color: transparent;
+    border-radius: .3rem;
+    padding: .5rem .5rem;
+    width: 70%;
+    transition: .2s;
+}
+
+#profile #username:focus {
+    background-color: #242731;
 }

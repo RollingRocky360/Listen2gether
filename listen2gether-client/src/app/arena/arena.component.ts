@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 import { SocketService } from '../services/socket.service';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, catchError, of, filter } from 'rxjs';
 import { transition, trigger, style, animate } from '@angular/animations';
 import { UserService } from '../services/user.service';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { User } from '../interfaces/user';
 
 @Component({
   selector: 'app-arena',
@@ -25,13 +27,32 @@ export class ArenaComponent {
   room = '';
   inputRoom = '';
   error$ = new BehaviorSubject<string>('');
+  user = this.userService.user$.getValue();
+  username = this.user?.username;
 
-  constructor(private socketSerivce: SocketService, private userService: UserService) { 
+  constructor(
+      private socketSerivce: SocketService, 
+      private userService: UserService,
+      private http: HttpClient
+  ) { 
     this.socketSerivce.socket$.subscribe((msg: any) => {
       this.inputRoom = '';
       if (msg.type === 'room-success') this.room = msg.result.room;
       else if (msg.type === 'room-failure') this.error$.next(msg.result);
     })
+    this.userService.user$.subscribe(user => this.user = user);
+  }
+
+  private validate() {
+    const fourDigNumRegex = /^\d\d\d\d$/;
+    if (!fourDigNumRegex.test(this.inputRoom)) {
+      this.inputRoom = '';
+      this.error$.next('Room code must be a 4-digit number');
+      return false;
+    } else {
+      this.error$.next('');
+      return true;
+    };  
   }
 
   joinRoom() {
@@ -51,17 +72,60 @@ export class ArenaComponent {
     });
   }
 
-  private validate() {
-    const fourDigNumRegex = /^\d\d\d\d$/;
-    if (!fourDigNumRegex.test(this.inputRoom)) {
-      this.inputRoom = '';
-      this.error$.next('Room code must be a 4-digit number');
-      return false;
-    } else {
-      this.error$.next('');
-      return true;
-    };  
+  async onPfpAdd(event: any) {
+    const file: File = event.target!.files[0];
+    const formData = new FormData();
+    formData.append('pfp', file);
+    
+    const options = {
+      headers: new HttpHeaders({
+        Authorization: 'Bearer ' + localStorage.getItem('token')
+      })
+    }
+    this.http.post<User>('http://localhost:3000/pfp-upload', formData, options)
+      .pipe(
+        catchError(err => {
+          return of(null);
+        }),
+        filter(data => data !== null)
+      )
+      .subscribe(user => {
+        this.userService.user$.next(user);
+      })
+  }  
+
+  async deletePfp() {
+    const options = {
+      headers: new HttpHeaders({
+        Authorization: 'Bearer ' + localStorage.getItem('token')
+      })
+    }
+    this.http.post<User>('http://localhost:3000/pfp-delete', '', options)
+      .pipe(
+        catchError(err => {
+          return of(null);
+        }),
+        filter(data => data !== null)
+      )
+      .subscribe(user => {
+        this.userService.user$.next(user);
+      })
   }
 
+  async onUsernameChange(e: KeyboardEvent) {
+    if (e.key !== 'Enter') return;
+    if (!this.username!.trim().length) return;
+
+    const options = {
+      headers: new HttpHeaders({
+        Authorization: 'Bearer ' + localStorage.getItem('token')
+      })
+    }
+
+    this.http.post<User>('http://localhost:3000/username-update', {username: this.username}, options)
+      .subscribe(user => {
+        this.userService.user$.next(user);
+      })
+  }
   
 }

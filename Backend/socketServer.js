@@ -31,6 +31,15 @@ function handleConnection(socket) {
             rooms.delete(_room_id);
         io.to(_room_id).emit('left', _user);
     });
+
+    socket.on('leave', () => {
+        const room = rooms.get(_room_id);
+        room.users = room.users.filter(user => user !== _user);
+        if (room.users.length === 0)
+            rooms.delete(_room_id);
+        _room_id = _user = undefined;
+        socket.to(_room_id).emit('left', _user);
+    })
     
     socket.on('search', async msg => {
         const searchResponse = await ytsr(msg.keyword, { limit: 10 });

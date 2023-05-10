@@ -7,6 +7,7 @@ interface Message {
   userId : string,
   username: string,
   message: string,
+  pfp: string,
   noDetails?: boolean
 }
 
@@ -43,6 +44,7 @@ export class MessageService {
     this.socketService.socket.emit('message', {
       userId: user?._id,
       username: user?.username,
+      pfp: user?.pfp,
       message,
     })
   }

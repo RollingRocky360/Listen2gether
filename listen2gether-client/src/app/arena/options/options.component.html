@@ -1,14 +1,26 @@
 <div id="connected" (click)="participantListExpanded = !participantListExpanded">
     <div id="expanded-list" *ngIf="participantListExpanded && participants.length" @fadeInOut>
         <div *ngFor="let participant of participants$ | async" class="participant">
-            <div class="pfp">{{ participant.username[0] }}</div>
+            <div class="pfp" *ngIf="!participant.pfp else pfp">{{ participant.username[0] }}</div>
+            <ng-template #pfp>
+                <img [src]="participant.pfp" class="pfp">
+            </ng-template>
             <p class="username">{{ participant.username }}</p>
         </div>
     </div>
 
-    <div class="u-pfp-container" *ngFor="let participant of (participants$ | async)!.slice(0,3)">
-        <div class="u-pfp">{{ participant.username[0] }}</div>
+    <div class="u-pfp-container" *ngFor="let participant of (participants$ | async)!.slice(0,6)">
+        <div class="u-pfp" *ngIf="!participant.pfp else pfp">{{ participant.username[0] }}</div>
+        <ng-template #pfp>
+            <img [src]="participant.pfp" class="u-pfp">
+        </ng-template>
     </div>
     
-    <p *ngIf="!participants.length" style="margin: 0; text-align: center;">No Friends? 🫵😂</p>
+    <p *ngIf="!participants.length" style="margin: 0; text-align: center; filter: saturate(0);">No Friends? 🫵😂</p>
 </div>
+
+<button id="leave" (click)="leave()">
+    <span class="material-icons" style="font-size: 2rem;">
+        exit_to_app
+    </span>
+</button>

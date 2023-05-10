@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { User } from 'src/app/interfaces/user';
 import { SocketService } from 'src/app/services/socket.service';
-import { UserService } from 'src/app/services/user.service';
 
 import { trigger, transition, style, animate, query, stagger } from '@angular/animations'
 
@@ -31,7 +30,9 @@ import { trigger, transition, style, animate, query, stagger } from '@angular/an
     ])
   ])]
 })
-export class OptionsComponent implements OnInit{
+export class OptionsComponent {
+
+  @Output() leaveEvent = new EventEmitter();
 
   participantListExpanded = false;
   participants: User[] = [];
@@ -51,8 +52,9 @@ export class OptionsComponent implements OnInit{
     })
   }
 
-  ngOnInit(): void {
-      
+  leave() {
+    this.socketService.socket.emit('leave');
+    this.leaveEvent.emit();
   }
 
 }

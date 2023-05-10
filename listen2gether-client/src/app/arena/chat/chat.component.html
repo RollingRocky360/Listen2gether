@@ -15,7 +15,10 @@
         </div>
         <ng-template #detailed>
             <div class="message" @enterSmooth>
-                <div class="pfp">{{ msg.username[0] }}</div>
+                <div class="pfp" *ngIf="!msg.pfp else pfp">{{ msg.username[0] }}</div>
+                <ng-template #pfp>
+                    <img [src]="msg.pfp" alt="" class="pfp">
+                </ng-template>
                 <p class="username">{{ msg.username }}</p>
                 <p class="content">{{ msg.message }}</p>
             </div>

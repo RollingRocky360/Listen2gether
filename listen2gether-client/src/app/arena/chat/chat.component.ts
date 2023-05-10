@@ -1,5 +1,5 @@
 import { style, transition, trigger, animate } from '@angular/animations';
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { MessageService } from 'src/app/services/message.service';
 
 @Component({
@@ -13,7 +13,7 @@ import { MessageService } from 'src/app/services/message.service';
     ])
   ])]
 })
-export class ChatComponent {
+export class ChatComponent implements OnDestroy{
   messages$;
   message: string = ''
   
@@ -28,5 +28,9 @@ export class ChatComponent {
     console.log('message')
     this.messageService.send(this.message.trim());
     this.message = '';
+  }
+
+  ngOnDestroy(): void {
+    this.messageService.messages = [];
   }
 }

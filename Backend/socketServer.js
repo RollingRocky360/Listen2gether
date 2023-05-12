@@ -2,10 +2,9 @@ const { createServer } = require('http');
 const { Server } = require('socket.io');
 const ytdl = require('ytdl-core');
 const ytsr = require('alternative-ytsr');
+const httpServer = require('./server')
 
 const rooms = new Map();
-
-const httpServer = createServer();
 
 const io = new Server(httpServer, {
     cors: {
@@ -26,19 +25,23 @@ function handleConnection(socket) {
         if (!_room_id) return;
         
         const room = rooms.get(_room_id);
-        room.users = room.users.filter(user => user !== _user);
-        if (room.users.length === 0)
+        room.users = room.users.filter(user => user._id !== _user._id);
+        if (room.users.length === 0) {
             rooms.delete(_room_id);
+            console.log('room ' + _room_id + ' deleted');
+        }
         io.to(_room_id).emit('left', _user);
     });
 
     socket.on('leave', () => {
         const room = rooms.get(_room_id);
-        room.users = room.users.filter(user => user !== _user);
-        if (room.users.length === 0)
+        room.users = room.users.filter(user => user._id !== _user._id);
+        if (room.users.length === 0) {
             rooms.delete(_room_id);
-        _room_id = _user = undefined;
+            console.log('room ' + _room_id + ' deleted');
+        }
         socket.to(_room_id).emit('left', _user);
+        _room_id = _user = undefined;
     })
     
     socket.on('search', async msg => {
@@ -103,7 +106,6 @@ function handleConnection(socket) {
     });
 
     socket.on('message', msg => {
-        console.log(_room_id);
         io.to(_room_id).emit('message', msg);
     });
 
@@ -138,9 +140,11 @@ function handleConnection(socket) {
             ready: 0,
         });
         socket.emit('room-success', { room });
+
+        console.log('Room ' + room + ' Created by ' + user.username);
     })
 }
 
 io.on('connection', handleConnection);
 
-httpServer.listen(4201);
+httpServer.listen(3000);

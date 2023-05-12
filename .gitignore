@@ -9,7 +9,7 @@
 # Node
 /listen2gether-client/node_modules
 /listen2gether-client/.angular
-/backend/node_modules
+/Backend/node_modules
 npm-debug.log
 yarn-error.log
 

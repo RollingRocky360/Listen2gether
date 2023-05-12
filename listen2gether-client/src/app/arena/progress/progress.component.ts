@@ -40,7 +40,7 @@ export class ProgressComponent {
       console.log(msg);
       if (msg.type === 'play') { this.paused$.next(false); this.audio.nativeElement.play();  }
       else if (msg.type === 'pause') {  this.paused$.next(true); this.audio.nativeElement.pause(); }
-      else if (msg.type === 'skip') { this.nextSong(); }
+      else if (msg.type === 'skip') { this.nextSong(); this.barWidth = 0;}
     })
 
     this.playerService.currentSong$.subscribe((song: Song) => {

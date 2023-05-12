@@ -1,5 +1,4 @@
 const SECRET = 'rThcexYrtlHBRQ'
-const HOST = 'localhost'
 
 
 const express = require('express')
@@ -8,7 +7,7 @@ const multer = require('multer')
 const sharp = require('sharp')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
-
+const http = require('http')
 const { MongoClient, ObjectId } = require('mongodb')
 
 const db_uri = 'mongodb://localhost:27017';
@@ -16,9 +15,8 @@ const client = new MongoClient(db_uri);
 const db = client.db('test');
 const users = db.collection('users');
 
-const upload = multer();
 const app = express()
-
+const upload = multer();
 
 // middleware
 
@@ -44,7 +42,7 @@ app.get('/login', async (req, res) => {
         return;
     }
 
-    const { password, ...user} = await users.findOne({ _id: new ObjectId(id) });
+    const { password, ...user } = await users.findOne({ _id: new ObjectId(id) });
     res.json(user);
 })
 
@@ -103,10 +101,13 @@ app.post('/signup', async (req, res) => {
         email, username, password: hashedPassword
     })
 
-    const user = await users.findOne({ _id: insertedId }, { projection: {
-        email: 1,
-        username: 1
-    }})
+    const user = await users.findOne (
+        { _id: insertedId }, 
+        { projection: {
+            email: 1,
+            username: 1
+        }}
+    )
 
     const token = jwt.sign({ id: insertedId.toString() }, SECRET);
 
@@ -181,4 +182,10 @@ app.post('/username-update', async (req, res) => {
     res.json(user);
 })
 
-app.listen(3000, HOST)
+app.get('/test', (req, res) => {
+    res.json({ hello: 1})
+})
+// app.listen(3000, HOST)
+
+const httpServer = http.createServer(app)
+module.exports = httpServer

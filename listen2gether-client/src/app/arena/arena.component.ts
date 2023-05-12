@@ -6,6 +6,9 @@ import { UserService } from '../services/user.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { User } from '../interfaces/user';
 
+import { HOST, SERVER_PORT } from '../../host-config';
+const HOST_URL = `http://${HOST}:${SERVER_PORT}`
+
 @Component({
   selector: 'app-arena',
   templateUrl: './arena.component.html',
@@ -82,7 +85,7 @@ export class ArenaComponent {
         Authorization: 'Bearer ' + localStorage.getItem('token')
       })
     }
-    this.http.post<User>('http://localhost:3000/pfp-upload', formData, options)
+    this.http.post<User>(HOST_URL + '/pfp-upload', formData, options)
       .pipe(
         catchError(err => {
           return of(null);
@@ -100,7 +103,7 @@ export class ArenaComponent {
         Authorization: 'Bearer ' + localStorage.getItem('token')
       })
     }
-    this.http.post<User>('http://localhost:3000/pfp-delete', '', options)
+    this.http.post<User>(HOST_URL + '/pfp-delete', '', options)
       .pipe(
         catchError(err => {
           return of(null);
@@ -122,7 +125,7 @@ export class ArenaComponent {
       })
     }
 
-    this.http.post<User>('http://localhost:3000/username-update', {username: this.username}, options)
+    this.http.post<User>(HOST_URL + '/username-update', {username: this.username}, options)
       .subscribe(user => {
         this.userService.user$.next(user);
       })

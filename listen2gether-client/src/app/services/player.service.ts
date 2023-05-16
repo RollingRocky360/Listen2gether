@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 
 import { Song } from '../interfaces/song';
+import { LoadingService } from './loading.service';
 
 @Injectable({
   providedIn: 'root'
@@ -45,7 +46,7 @@ export class PlayerService {
     this.queue$.next(this.queue);
   }
 
-  constructor() {
+  constructor(private loadingService: LoadingService) {
     this.currentSong$ = new Subject<Song>();
     this.queue$ = new Subject<Array<Song>>();
   }

@@ -8,15 +8,22 @@ const sharp = require('sharp')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const http = require('http')
-const { MongoClient, ObjectId } = require('mongodb')
 
+
+// DB initialization
+
+const { MongoClient, ObjectId } = require('mongodb')
 const db_uri = 'mongodb://localhost:27017';
 const client = new MongoClient(db_uri);
 const db = client.db('test');
 const users = db.collection('users');
 
+
+// Express app initialization
+
 const app = express()
 const upload = multer();
+
 
 // middleware
 

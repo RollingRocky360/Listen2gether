@@ -1,4 +1,4 @@
-<p class="container-title">
+<p class="container-title" [ngClass]="{'loading-title': isQueueLoading$ | async}">
     <span class="material-icons">
         queue_music
     </span>

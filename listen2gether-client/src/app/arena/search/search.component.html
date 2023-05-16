@@ -1,8 +1,11 @@
 
 <div class="input-container" id="search-container">
-    <span class="material-icons">
-        search
-    </span>
+    <span class="loading" *ngIf="isSearchLoading$ | async else noLoading"></span>
+    <ng-template #noLoading>
+        <span class="material-icons">
+            search
+        </span>
+    </ng-template>
     <input 
         (keyup)="search($event)" 
         [(ngModel)]="keyWord" 

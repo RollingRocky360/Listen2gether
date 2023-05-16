@@ -77,7 +77,7 @@ function handleConnection(socket) {
             author: vd.author.name
         }
         
-        io.to(_room_id).emit('add', song);
+        io.to(_room_id).emit('add', { song, userId: _user._id });
     });
 
     socket.on('play', msg => {

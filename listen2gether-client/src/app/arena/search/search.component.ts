@@ -7,6 +7,7 @@ import { BehaviorSubject } from 'rxjs'
 
 import { Song } from '../../interfaces/song';
 import { query, stagger, style, transition, trigger, animate } from '@angular/animations';
+import { LoadingService } from 'src/app/services/loading.service';
 
 @Component({
   selector: 'app-search',
@@ -36,16 +37,15 @@ import { query, stagger, style, transition, trigger, animate } from '@angular/an
 })
 export class SearchComponent {
   keyWord = '';
-  searchResults$ = new BehaviorSubject<Song[]>([]) ;
+  searchResults$ = new BehaviorSubject<Song[]>([]);
+  isSearchLoading$ = this.loadingService.isSearchLoading$;
 
   ngOnInit() {
     this.socketService.socket$.subscribe((msg: any) => {
       console.log(msg);
 
-      if (msg.type === 'add') {
-        console.log('adding');
-        this.playerService.add(msg.result);
-      } else if (msg.type === 'search-results') {
+      if (msg.type === 'search-results') {
+        this.loadingService.decrementSearchLoadCount();
         this.searchResults$.next(msg.result);
       }
       
@@ -57,6 +57,8 @@ export class SearchComponent {
     if (e.code !== 'Enter') return;
     if (!this.keyWord.length) return;
 
+    this.loadingService.incrementSearchLoadCount();
+
     console.log('search')
     this.searchResults$.next([]);
     this.socketService.socket.emit('search', { keyword: this.keyWord });
@@ -65,12 +67,13 @@ export class SearchComponent {
   add(song: Song) {
     this.keyWord = '';
     this.searchResults$.next([]);
+    this.loadingService.incrementQueueLoadCount();
 
     this.socketService.socket.emit('add', { url: song.url });
   }
 
   constructor(
-    private playerService: PlayerService,
-    private socketService: SocketService
+    private socketService: SocketService,
+    private loadingService: LoadingService
   ) { }
 }

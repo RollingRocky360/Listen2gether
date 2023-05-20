@@ -7,7 +7,9 @@ import { filter, catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { AuthError } from '../interfaces/autherror';
 
-const BASE_URL = `https://listen2gether-api.onrender.com`
+import  { HOST } from '../../host-config'
+
+const BASE_URL = 'https://' + HOST
 
 interface AuthResponse {
   _id: string,

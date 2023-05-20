@@ -6,8 +6,8 @@ import { UserService } from '../services/user.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { User } from '../interfaces/user';
 
-import { HOST, SERVER_PORT } from '../../host-config';
-const HOST_URL = `http://${HOST}:${SERVER_PORT}`
+import { HOST }  from '../../host-config';
+const HOST_URL = 'https://' + HOST;
 
 @Component({
   selector: 'app-arena',

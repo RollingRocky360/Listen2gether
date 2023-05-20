@@ -44,7 +44,7 @@ app.get('/login', async (req, res) => {
     let id;
 
     try {
-        id = jwt.verify(token, SECRET);
+        id = jwt.verify(token, JWT_SECRET);
     } catch(err) {
         res.status(403).json({
             error: 'access forbidden'
@@ -82,7 +82,7 @@ app.post('/login', async (req, res) => {
         return;
     }
 
-    const token = jwt.sign({ id: user._id }, SECRET);
+    const token = jwt.sign({ id: user._id }, JWT_SECRET);
 
     res.json({
         _id: user._id,
@@ -157,7 +157,7 @@ app.post('/pfp-delete', async (req, res) => {
     let id;
 
     try {
-        id = jwt.verify(token, SECRET);
+        id = jwt.verify(token, JWT_SECRET);
     } catch(err) {
         res.status(403).json({
             error: 'access forbidden'
@@ -177,7 +177,7 @@ app.post('/username-update', async (req, res) => {
     let id;
 
     try {
-        id = jwt.verify(token, SECRET);
+        id = jwt.verify(token, JWT_SECRET);
     } catch(err) {
         res.status(403).json({
             error: 'access forbidden'

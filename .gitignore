@@ -11,6 +11,7 @@
 /listen2gether-client/.angular
 /Backend/node_modules
 /Backend/db
+/Backend/.env
 npm-debug.log
 yarn-error.log
 

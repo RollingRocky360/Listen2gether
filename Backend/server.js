@@ -1,5 +1,6 @@
-const SECRET = 'rThcexYrtlHBRQ'
+require('dotenv').config()
 
+const JWT_SECRET = process.env.JWT_SECRET
 
 const express = require('express')
 const cors = require('cors')
@@ -116,7 +117,7 @@ app.post('/signup', async (req, res) => {
         }}
     )
 
-    const token = jwt.sign({ id: insertedId.toString() }, SECRET);
+    const token = jwt.sign({ id: insertedId.toString() }, JWT_SECRET);
 
     res.json({ ...user, token });
 })
@@ -190,7 +191,7 @@ app.post('/username-update', async (req, res) => {
 })
 
 app.get('/test', (req, res) => {
-    res.json({ hello: 1})
+    res.json({ hello: 1 })
 })
 // app.listen(3000, HOST)
 

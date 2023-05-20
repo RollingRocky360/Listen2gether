@@ -1,4 +1,3 @@
-const { createServer } = require('http');
 const { Server } = require('socket.io');
 const ytdl = require('ytdl-core');
 const ytsr = require('alternative-ytsr');
@@ -30,6 +29,7 @@ function handleConnection(socket) {
             rooms.delete(_room_id);
             console.log('room ' + _room_id + ' deleted');
         }
+        socket.leave(_room_id);
         io.to(_room_id).emit('left', _user);
     });
 
@@ -38,9 +38,10 @@ function handleConnection(socket) {
         room.users = room.users.filter(user => user._id !== _user._id);
         if (room.users.length === 0) {
             rooms.delete(_room_id);
-            console.log('room ' + _room_id + ' deleted');
+            console.log('Room ' + _room_id + ' deleted');
         }
         socket.to(_room_id).emit('left', _user);
+        socket.leave(_room_id);
         _room_id = _user = undefined;
     })
     

@@ -9,6 +9,7 @@
 # Node
 /listen2gether-client/node_modules
 /listen2gether-client/.angular
+/listen2gether-client/.env
 /Backend/node_modules
 /Backend/db
 /Backend/.env

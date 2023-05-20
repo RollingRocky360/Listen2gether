@@ -7,9 +7,9 @@ import { filter, catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { AuthError } from '../interfaces/autherror';
 
-import { HOST, SERVER_PORT } from 'src/host-config'
+const { API_HOST, API_PORT } = process.env
 
-const BASE_URL = `http://${HOST}:${SERVER_PORT}`
+const BASE_URL = `https://${API_HOST}`
 
 interface AuthResponse {
   _id: string,

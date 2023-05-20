@@ -1,6 +1,8 @@
 require('dotenv').config()
 
 const JWT_SECRET = process.env.JWT_SECRET
+const DB_USER = process.env.DB_USER
+const DB_PASSWORD = process.env.DB_PASSWORD
 
 const express = require('express')
 const cors = require('cors')
@@ -14,7 +16,7 @@ const http = require('http')
 // DB initialization
 
 const { MongoClient, ObjectId } = require('mongodb')
-const db_uri = 'mongodb://localhost:27017';
+const db_uri = `mongodb+srv://${DB_USER}:${DB_PASSWORD}@cluster0.wkngwm2.mongodb.net/?retryWrites=true&w=majority`;
 const client = new MongoClient(db_uri);
 const db = client.db('test');
 const users = db.collection('users');

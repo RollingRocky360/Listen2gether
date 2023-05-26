@@ -42,7 +42,7 @@
                 id="username" 
                 type="text" 
                 [(ngModel)]="username" 
-                (keyup)="onUsernameChange($event)"
+                (keyup)="usernameUpdate$.next(username!)"
                 >
 
         </div>

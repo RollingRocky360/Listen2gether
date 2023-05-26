@@ -1,13 +1,14 @@
 import { Component } from '@angular/core';
 import { SocketService } from '../services/socket.service';
-import { BehaviorSubject, catchError, of, filter } from 'rxjs';
+import { BehaviorSubject, catchError, of, Subject, debounceTime } from 'rxjs';
+import { filter } from 'rxjs/operators'
 import { transition, trigger, style, animate } from '@angular/animations';
 import { UserService } from '../services/user.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { User } from '../interfaces/user';
 
-import { HOST }  from '../../host-config';
-const HOST_URL = 'https://' + HOST;
+import { HOST, PORT }  from '../../host-config';
+const HOST_URL = 'http://' + HOST + ':' + PORT;
 
 @Component({
   selector: 'app-arena',
@@ -32,6 +33,7 @@ export class ArenaComponent {
   error$ = new BehaviorSubject<string>('');
   user = this.userService.user$.getValue();
   username = this.user?.username;
+  usernameUpdate$ = new Subject<string>()
 
   constructor(
       private socketSerivce: SocketService, 
@@ -43,7 +45,32 @@ export class ArenaComponent {
       if (msg.type === 'room-success') this.room = msg.result.room;
       else if (msg.type === 'room-failure') this.error$.next(msg.result);
     })
+
     this.userService.user$.subscribe(user => this.user = user);
+
+    this.usernameUpdate$
+      .pipe(
+        debounceTime(250),
+        filter((item: string) => item.length < 23)
+      )
+      .subscribe((username: string) => {
+        if (username.length < 2) {
+          this.username = this.user!.username;
+          return;
+        }
+
+        const options = {
+          headers: new HttpHeaders({
+            Authorization: 'Bearer ' + localStorage.getItem('token')
+          })
+        }
+
+        this.http.post<User>(HOST_URL + '/username-update', { username }, options)
+          .subscribe(user => {
+            this.userService.user$.next(user);
+          })
+      })
+
   }
 
   private validate() {
@@ -113,22 +140,5 @@ export class ArenaComponent {
       .subscribe(user => {
         this.userService.user$.next(user);
       })
-  }
-
-  async onUsernameChange(e: KeyboardEvent) {
-    if (e.key !== 'Enter') return;
-    if (!this.username!.trim().length) return;
-
-    const options = {
-      headers: new HttpHeaders({
-        Authorization: 'Bearer ' + localStorage.getItem('token')
-      })
-    }
-
-    this.http.post<User>(HOST_URL + '/username-update', {username: this.username}, options)
-      .subscribe(user => {
-        this.userService.user$.next(user);
-      })
-  }
-  
+  }  
 }

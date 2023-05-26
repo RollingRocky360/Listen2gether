@@ -4,10 +4,10 @@ import { Subject } from 'rxjs';
 import { UserService } from './user.service';
 
 interface Message {
-  userId : string,
+  _id : string,
   username: string,
   message: string,
-  pfp: string,
+  pfp?: string,
   noDetails?: boolean
 }
 
@@ -22,30 +22,28 @@ export class MessageService {
   constructor(private socketService: SocketService, private userService: UserService) { 
     this.socketService.socket$.subscribe( (msg: any) => {
       if (msg.type !== 'message') return;
-
-      const message = msg.result;
-      if (this.messages.length && this.messages[0]?.userId === message.userId)
-        message.noDetails = true;
-
-      this.messages.unshift(message);
-
-      if (this.messages.length > 200) {
-        this.messages.pop();
-        this.messages[this.messages.length-1].noDetails = false;
-      }
-      
-      this.messages$.next(this.messages);
+      this.addMessage(msg.result);
     })
   }
-
+  
   send(message: string) {
     const user = this.userService.user$.getValue();
+    const msg: Message = {...user, message } as Message;
+    this.addMessage(msg);
+    this.socketService.socket.emit('message', msg)
+  }
 
-    this.socketService.socket.emit('message', {
-      userId: user?._id,
-      username: user?.username,
-      pfp: user?.pfp,
-      message,
-    })
+  addMessage(message: Message) {
+    if (this.messages.length && this.messages[0]?._id === message._id)
+      message.noDetails = true;
+
+    this.messages.unshift(message);
+
+    if (this.messages.length > 200) {
+      this.messages.pop();
+      this.messages[this.messages.length-1].noDetails = false;
+    }
+    
+    this.messages$.next(this.messages);
   }
 }

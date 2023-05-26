@@ -16,7 +16,7 @@ const http = require('http')
 // DB initialization
 
 const { MongoClient, ObjectId } = require('mongodb')
-const db_uri = `mongodb+srv://${DB_USER}:${DB_PASSWORD}@cluster0.wkngwm2.mongodb.net/?retryWrites=true&w=majority`;
+const db_uri = `mongodb://localhost:27017`;
 const client = new MongoClient(db_uri);
 const db = client.db('test');
 const users = db.collection('users');
@@ -129,7 +129,7 @@ app.post('/pfp-upload', upload.single('pfp'), async (req, res) => {
     let id;
 
     try {
-        id = jwt.verify(token, SECRET);
+        id = jwt.verify(token, JWT_SECRET);
     } catch(err) {
         res.status(403).json({
             error: 'access forbidden'
@@ -189,6 +189,7 @@ app.post('/username-update', async (req, res) => {
     await users.updateOne({ _id: new ObjectId(id) }, { $set: { username }});
 
     const {password, ...user} = await users.findOne({ _id: new ObjectId(id) });
+    console.log('username updated to ', user.username);
     res.json(user);
 })
 

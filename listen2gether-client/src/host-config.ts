@@ -1,1 +1,2 @@
-export const HOST = 'listen2gether-api.onrender.com'
+export const HOST = 'localhost'
+export const PORT = 3000;

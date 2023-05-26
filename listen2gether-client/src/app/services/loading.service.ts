@@ -5,15 +5,15 @@ import { BehaviorSubject } from "rxjs";
     providedIn: 'root'
 })
 export class LoadingService {
-    isSearchLoading$ = new BehaviorSubject(0);
+    isSearchLoading$ = new BehaviorSubject(false);
     isQueueLoading$ = new BehaviorSubject(0);
 
-    incrementSearchLoadCount() {
-        this.isSearchLoading$.next(this.isSearchLoading$.getValue() + 1);
+    setSearchLoad() {
+        this.isSearchLoading$.next(true);
     }
 
-    decrementSearchLoadCount() {
-        this.isSearchLoading$.next(this.isSearchLoading$.getValue() - 1);
+    unsetSearchLoad() {
+        this.isSearchLoading$.next(false);
     }
 
     incrementQueueLoadCount() {

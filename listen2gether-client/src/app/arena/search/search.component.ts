@@ -45,7 +45,7 @@ export class SearchComponent {
       console.log(msg);
 
       if (msg.type === 'search-results') {
-        this.loadingService.decrementSearchLoadCount();
+        this.loadingService.unsetSearchLoad();
         this.searchResults$.next(msg.result);
       }
       
@@ -57,7 +57,7 @@ export class SearchComponent {
     if (e.code !== 'Enter') return;
     if (!this.keyWord.length) return;
 
-    this.loadingService.incrementSearchLoadCount();
+    this.loadingService.setSearchLoad();
 
     console.log('search')
     this.searchResults$.next([]);

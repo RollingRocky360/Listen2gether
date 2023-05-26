@@ -107,7 +107,7 @@ function handleConnection(socket) {
     });
 
     socket.on('message', msg => {
-        io.to(_room_id).emit('message', msg);
+        socket.to(_room_id).emit('message', msg);
     });
 
     socket.on('join', ({ room, user }) => {

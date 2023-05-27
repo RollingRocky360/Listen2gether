@@ -10,7 +10,7 @@
 /listen2gether-client/node_modules
 /listen2gether-client/.angular
 /listen2gether-client/.env
-/listen2gether-client/src/host-config.ts
+/listen2gether-client/host-config.ts
 /Backend/node_modules
 /Backend/db
 /Backend/.env

@@ -7,8 +7,9 @@ import { UserService } from '../services/user.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { User } from '../interfaces/user';
 
-import { HOST, PORT }  from '../../host-config';
-const HOST_URL = 'http://' + HOST + ':' + PORT;
+import { API_URL } from '../../../host-config';
+
+const HOST_URL = API_URL || 'https://listen2gether-api.gagansaics.repl.co';
 
 @Component({
   selector: 'app-arena',

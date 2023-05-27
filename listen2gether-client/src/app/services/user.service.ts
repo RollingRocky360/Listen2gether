@@ -7,9 +7,9 @@ import { filter, catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { AuthError } from '../interfaces/autherror';
 
-import  { HOST, PORT } from '../../host-config'
+import { API_URL } from 'host-config';
 
-const BASE_URL = 'http://' + HOST + ':' + PORT;
+const BASE_URL = API_URL || 'https://listen2gether-api.gagansaics.repl.co';
 
 interface AuthResponse {
   _id: string,

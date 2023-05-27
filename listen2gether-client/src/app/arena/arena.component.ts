@@ -9,7 +9,7 @@ import { User } from '../interfaces/user';
 
 import { API_URL } from '../../../host-config';
 
-const HOST_URL = 'https://listen2gether-api.gagansaics.repl.co';
+const HOST_URL = API_URL || 'https://listen2gether-api.gagansaics.repl.co';
 
 @Component({
   selector: 'app-arena',

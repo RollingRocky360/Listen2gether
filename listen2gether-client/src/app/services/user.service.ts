@@ -9,7 +9,7 @@ import { AuthError } from '../interfaces/autherror';
 
 import { API_URL } from '../../../host-config';
 
-const BASE_URL = API_URL || 'https://listen2gether-api.gagansaics.repl.co';
+const BASE_URL = https://listen2gether-api.gagansaics.repl.co';
 
 interface AuthResponse {
   _id: string,

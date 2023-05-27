@@ -90,7 +90,7 @@ export class UserService {
         localStorage.setItem('token', resp!.token);
         const { token, ...user } = resp!;
         this.user$.next(user);
-        this.router.navigateByUrl('/');
+        this.router.navigateByUrl('/Listen2gether');
       })
   }
 }

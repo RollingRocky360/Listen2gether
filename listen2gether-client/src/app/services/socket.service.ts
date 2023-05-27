@@ -4,7 +4,7 @@ import { BehaviorSubject } from 'rxjs';
 import { io } from 'socket.io-client';
 
 import { SOCKET_URL } from '../../../host-config';
-const socket_url = SOCKET_URL || 'wss://listen2gether-api.gagansaics.repl.co'
+const socket_url = 'wss://listen2gether-api.gagansaics.repl.co'
 
 @Injectable({
   providedIn: 'root'

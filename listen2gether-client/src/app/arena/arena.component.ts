@@ -6,7 +6,7 @@ import { UserService } from '../services/user.service';
 import { LoadingService } from '../services/loading.service';
 
 let HOST_URL = 'http://localhost:3000'
-// HOST_URL = 'https://listen2gether-api.gagansaics.repl.co';
+HOST_URL = 'https://listen2gether-api.gagansaics.repl.co';
 
 @Component({
   selector: 'app-arena',

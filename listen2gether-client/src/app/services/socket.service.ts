@@ -5,7 +5,7 @@ import { io } from 'socket.io-client';
 
 
 let SOCKET_URL = 'ws://localhost:3000'
-// SOCKET_URL = 'wss://listen2gether-api.gagansaics.repl.co'
+SOCKET_URL = 'wss://listen2gether-api.gagansaics.repl.co'
 
 @Injectable({
   providedIn: 'root'

@@ -11,7 +11,7 @@ import { API_URL } from '../../../host-config';
 import { LoadingService } from './loading.service';
 
 let BASE_URL = 'http://localhost:3000';
-// BASE_URL = 'https://listen2gether-api.gagansaics.repl.co';
+BASE_URL = 'https://listen2gether-api.gagansaics.repl.co';
 
 interface AuthResponse {
   _id: string,
@@ -41,6 +41,8 @@ export class UserService {
       return;
     }
 
+    this.loadingService.setAuthLoad();
+
     const options = {
       headers: new HttpHeaders({
         'Authorization': 'Bearer ' + token
@@ -48,6 +50,7 @@ export class UserService {
     }
     this.http.get<User>(BASE_URL + '/login', options)
       .subscribe(user => {
+        this.loadingService.unsetAuthLoad();
         this.user$.next(user);
       })
   }

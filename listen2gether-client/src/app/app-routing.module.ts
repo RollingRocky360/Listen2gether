@@ -6,11 +6,11 @@ import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
   { 
-    path: 'Listen2gether', 
+    path: '', 
     component: ArenaComponent, 
     canActivate: [ AuthGuard ]
   },
-  { path: 'Listen2gether/auth', component: AuthComponent }
+  { path: 'auth', component: AuthComponent }
 ];
 
 @NgModule({

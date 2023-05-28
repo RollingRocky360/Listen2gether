@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from '../services/user.service';
 
 import { AuthError } from '../interfaces/autherror';
+import { LoadingService } from '../services/loading.service';
 
 @Component({
   selector: 'app-auth',
@@ -11,6 +12,7 @@ import { AuthError } from '../interfaces/autherror';
 export class AuthComponent implements OnInit {
 
   registering = false;
+  authLoading$ = this.loadingService.isAuthLoading$;
 
   errors: AuthError = { 
     email: '', 
@@ -24,7 +26,7 @@ export class AuthComponent implements OnInit {
 
   private emailRegex = /^[\w\d_]{3,}(\.[\w\d_]+)*@\w+\.\w+(\.\w+)*$/;
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService, private loadingService: LoadingService) { }
 
   ngOnInit(): void {
     this.errors = { email: '', password: '', username: '' };

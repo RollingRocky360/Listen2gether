@@ -56,21 +56,31 @@
             [(ngModel)]="password">
     </div>
 
-    <div id="actions" *ngIf="!registering else logintemplate">
-        <button id="main-action" (click)="login()">Login</button>
-        <span>
-            Don't have an account? 
-            <button id="alt-action" (click)="registering=true">Register</button>
-        </span>
-    </div>
 
-    <ng-template #logintemplate>
-        <div id="actions">
-            <button id="main-action" (click)="signup()">Sign Up</button>
-            <span>
-                Already have an account?
-                <button id="alt-action" (click)="registering=false">Login</button>
-            </span>
+    <ng-template [ngIf]="authLoading$ | async" [ngIfElse]="notloading">
+        <div id="loader">
+            <div></div>
         </div>
     </ng-template>
+
+    <ng-template #notloading>
+        <div id="actions" *ngIf="!registering else logintemplate">
+            <button id="main-action" (click)="login()">Login</button>
+            <span>
+                Don't have an account?
+                <button id="alt-action" (click)="registering=true">Register</button>
+            </span>
+        </div>
+        
+        <ng-template #logintemplate>
+            <div id="actions">
+                <button id="main-action" (click)="signup()">Sign Up</button>
+                <span>
+                    Already have an account?
+                    <button id="alt-action" (click)="registering=false">Login</button>
+                </span>
+            </div>
+        </ng-template>
+    </ng-template>
+
 </form>

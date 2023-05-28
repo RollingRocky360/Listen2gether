@@ -24,7 +24,7 @@ export class AuthGuard implements CanActivate{
       filter(user => user !== undefined),
       switchMap(user => {
         if (!user) {
-          this.router.navigateByUrl('Listen2gether/auth');
+          this.router.navigateByUrl('/auth');
           return of(false);
         }
         return of(true);

@@ -1,0 +1,35 @@
+<input 
+    type="file" 
+    name="pfp" 
+    style="display: none;" 
+    #pfpInput
+    (change)="onPfpAdd($event);"
+    >
+<div id="pfp-container">
+    <div id="underlay">
+        <button type="button" (click)="pfpInput.click()" id="addPfp">
+            <span class="material-icons" style="font-size: 2.5rem;">
+                add_photo_alternate
+            </span>
+        </button>
+        <button type="button" (click)="deletePfp()" id="delPfp">
+            <span class="material-icons" style="font-size: 2.5rem;">
+                delete
+            </span>
+        </button>
+    </div>
+    <div id="pfp" *ngIf="!user?.pfp else imgpfp">
+        {{ user!.username[0] }}
+    </div>
+    <ng-template #imgpfp>
+        <img [src]="user!.pfp" alt="" id="pfp">
+    </ng-template>
+</div>
+<input 
+    autocomplete="off"
+    spellcheck="false"
+    id="username" 
+    type="text" 
+    [(ngModel)]="username" 
+    (change)="usernameUpdate$.next(username!)"
+    >

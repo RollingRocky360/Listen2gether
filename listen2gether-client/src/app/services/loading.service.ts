@@ -7,6 +7,7 @@ import { BehaviorSubject } from "rxjs";
 export class LoadingService {
     isSearchLoading$ = new BehaviorSubject(false);
     isQueueLoading$ = new BehaviorSubject(0);
+    isAuthLoading$ = new BehaviorSubject(false);
 
     setSearchLoad() {
         this.isSearchLoading$.next(true);
@@ -14,6 +15,14 @@ export class LoadingService {
 
     unsetSearchLoad() {
         this.isSearchLoading$.next(false);
+    }
+
+    setAuthLoad() {
+        this.isAuthLoading$.next(true);
+    }
+
+    unsetAuthLoad() {
+        this.isAuthLoading$.next(false);
     }
 
     incrementQueueLoadCount() {

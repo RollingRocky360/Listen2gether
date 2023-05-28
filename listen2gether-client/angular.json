@@ -16,6 +16,7 @@
             "outputPath": "../docs",
             "index": "src/index.html",
             "main": "src/main.ts",
+            "baseHref": "/Listen2gether/",
             "polyfills": [
               "zone.js"
             ],
@@ -91,6 +92,9 @@
             ],
             "scripts": []
           }
+        },
+        "deploy": {
+          "builder": "angular-cli-ghpages:deploy"
         }
       }
     }

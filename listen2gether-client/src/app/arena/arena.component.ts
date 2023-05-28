@@ -1,15 +1,12 @@
 import { Component } from '@angular/core';
 import { SocketService } from '../services/socket.service';
-import { BehaviorSubject, catchError, of, Subject, debounceTime } from 'rxjs';
-import { filter } from 'rxjs/operators'
+import { BehaviorSubject } from 'rxjs';
 import { transition, trigger, style, animate } from '@angular/animations';
 import { UserService } from '../services/user.service';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { User } from '../interfaces/user';
+import { LoadingService } from '../services/loading.service';
 
-import { API_URL } from '../../../host-config';
-
-const HOST_URL = 'https://listen2gether-api.gagansaics.repl.co';
+let HOST_URL = 'http://localhost:3000'
+// HOST_URL = 'https://listen2gether-api.gagansaics.repl.co';
 
 @Component({
   selector: 'app-arena',
@@ -32,46 +29,18 @@ export class ArenaComponent {
   room = '';
   inputRoom = '';
   error$ = new BehaviorSubject<string>('');
-  user = this.userService.user$.getValue();
-  username = this.user?.username;
-  usernameUpdate$ = new Subject<string>()
+  authLoading$ = this.loadingService.isAuthLoading$;
 
   constructor(
       private socketSerivce: SocketService, 
       private userService: UserService,
-      private http: HttpClient
+      private loadingService: LoadingService
   ) { 
     this.socketSerivce.socket$.subscribe((msg: any) => {
       this.inputRoom = '';
       if (msg.type === 'room-success') this.room = msg.result.room;
       else if (msg.type === 'room-failure') this.error$.next(msg.result);
     })
-
-    this.userService.user$.subscribe(user => this.user = user);
-
-    this.usernameUpdate$
-      .pipe(
-        debounceTime(250),
-        filter((item: string) => item.length < 23)
-      )
-      .subscribe((username: string) => {
-        if (username.length < 2) {
-          this.username = this.user!.username;
-          return;
-        }
-
-        const options = {
-          headers: new HttpHeaders({
-            Authorization: 'Bearer ' + localStorage.getItem('token')
-          })
-        }
-
-        this.http.post<User>(HOST_URL + '/username-update', { username }, options)
-          .subscribe(user => {
-            this.userService.user$.next(user);
-          })
-      })
-
   }
 
   private validate() {
@@ -103,43 +72,7 @@ export class ArenaComponent {
     });
   }
 
-  async onPfpAdd(event: any) {
-    const file: File = event.target!.files[0];
-    const formData = new FormData();
-    formData.append('pfp', file);
-    
-    const options = {
-      headers: new HttpHeaders({
-        Authorization: 'Bearer ' + localStorage.getItem('token')
-      })
-    }
-    this.http.post<User>(HOST_URL + '/pfp-upload', formData, options)
-      .pipe(
-        catchError(err => {
-          return of(null);
-        }),
-        filter(data => data !== null)
-      )
-      .subscribe(user => {
-        this.userService.user$.next(user);
-      })
-  }  
-
-  async deletePfp() {
-    const options = {
-      headers: new HttpHeaders({
-        Authorization: 'Bearer ' + localStorage.getItem('token')
-      })
-    }
-    this.http.post<User>(HOST_URL + '/pfp-delete', '', options)
-      .pipe(
-        catchError(err => {
-          return of(null);
-        }),
-        filter(data => data !== null)
-      )
-      .subscribe(user => {
-        this.userService.user$.next(user);
-      })
-  }  
+  logout() {
+    this.userService.logout();
+  }
 }

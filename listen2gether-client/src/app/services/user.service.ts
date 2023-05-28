@@ -8,8 +8,10 @@ import { Router } from '@angular/router';
 import { AuthError } from '../interfaces/autherror';
 
 import { API_URL } from '../../../host-config';
+import { LoadingService } from './loading.service';
 
-const BASE_URL = 'https://listen2gether-api.gagansaics.repl.co';
+let BASE_URL = 'http://localhost:3000';
+// BASE_URL = 'https://listen2gether-api.gagansaics.repl.co';
 
 interface AuthResponse {
   _id: string,
@@ -27,8 +29,9 @@ export class UserService {
     User | null | undefined
   >(undefined);
   authError$ = new Subject<AuthError>();
+  loading$ = new BehaviorSubject(false);
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router, private loadingService: LoadingService) { }
 
   loadUser(): void {
     const token = localStorage.getItem('token');
@@ -66,6 +69,12 @@ export class UserService {
     this.requestAuth(BASE_URL + '/signup', body);
   }
 
+  logout() {
+    localStorage.removeItem('token');
+    this.user$.next(null);
+    this.router.navigateByUrl('/auth');
+  }
+
   private requestAuth(url: string, body: any) {
     
     const options = {
@@ -73,6 +82,8 @@ export class UserService {
         'Content-Type': 'application/json',
       }),
     }
+
+    this.loadingService.setAuthLoad();
 
     this.http.post<AuthResponse>(url, body, options)
       .pipe(
@@ -86,11 +97,12 @@ export class UserService {
         filter(resp => resp !== null)
       )
       .subscribe(resp => {
+        this.loadingService.unsetAuthLoad();
         resp = resp as AuthResponse;
         localStorage.setItem('token', resp!.token);
         const { token, ...user } = resp!;
         this.user$.next(user);
-        this.router.navigateByUrl('/Listen2gether');
+        this.router.navigateByUrl('/');
       })
   }
 }

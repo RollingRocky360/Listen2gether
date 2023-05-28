@@ -113,4 +113,21 @@ button {
     font-style: italic;
 }
 
+#loader {
+    height: 5.8rem;
+    width: 80%;
+    display: grid;
+    place-items: center;
+}
+
+#loader div {
+    width: 2.5rem;
+    border: .2rem solid #a7acb8;
+    border-radius: 50%;
+    border-top-color: transparent;
+    aspect-ratio: 1;
+    animation: load 1s infinite linear;
+}
+
+
 

@@ -31,6 +31,7 @@ function handleConnection(socket) {
         }
         socket.leave(_room_id);
         io.to(_room_id).emit('left', _user);
+        _room_id = _user = undefined;
     });
 
     socket.on('leave', () => {

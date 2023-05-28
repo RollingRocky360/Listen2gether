@@ -3,8 +3,9 @@ import { BehaviorSubject } from 'rxjs';
 
 import { io } from 'socket.io-client';
 
-import { SOCKET_URL } from '../../../host-config';
-const socket_url = 'wss://listen2gether-api.gagansaics.repl.co'
+
+let SOCKET_URL = 'ws://localhost:3000'
+// SOCKET_URL = 'wss://listen2gether-api.gagansaics.repl.co'
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class SocketService {
   socket$ = new BehaviorSubject({ type: 'dummy', result: null});
 
   constructor() {
-    this.socket = io(socket_url);
+    this.socket = io(SOCKET_URL);
     this.socket.onAny((type, result) => {
       console.log(type, result)
       this.socket$.next({ type, result });

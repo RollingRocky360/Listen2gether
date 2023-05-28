@@ -16,6 +16,7 @@ import { SongComponent } from './arena/song/song.component';
 import { OptionsComponent } from './arena/options/options.component';
 
 import { timePipe } from './pipes/time.pipe';
+import { ProfileComponent } from './arena/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { timePipe } from './pipes/time.pipe';
     SongComponent,
     timePipe,
     OptionsComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,

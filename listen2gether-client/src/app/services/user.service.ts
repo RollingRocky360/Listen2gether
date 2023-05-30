@@ -37,7 +37,9 @@ export class UserService {
     const token = localStorage.getItem('token');
 
     if (!token) {
-      this.user$.next(null);
+      // intimates AuthGuard about lack of user data
+      // which then redirects the user to the Auth page
+      this.user$.next(null);  
       return;
     }
 
@@ -92,6 +94,7 @@ export class UserService {
       .pipe(
         catchError((err) => {
           if (err.status === 401) {
+            this.loadingService.unsetAuthLoad();
             this.user$.next(null);
             this.authError$.next(err.error);
           }

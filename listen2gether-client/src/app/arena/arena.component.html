@@ -7,31 +7,25 @@
 </ng-template>
 
 <ng-template [ngIf]="!room">
-    <ng-template [ngIf]="authLoading$ | async" [ngIfElse]="notloading">
-        <p class="loading-title" id="loader">Loading</p>
-    </ng-template>
+    <button id="logout" (click)="logout()">
+        <p>Logout</p>
+        <span class="material-icons">
+        logout</span>
+    </button>
+    <div id="front-page">
+        <app-profile></app-profile>
 
-    <ng-template #notloading>
-        <button id="logout" (click)="logout()">
-            <p>Logout</p>
-            <span class="material-icons">
-            logout</span>
-        </button>
-        <div id="front-page">
-            <app-profile></app-profile>
-
-            <div id="create-join">
-                <p id="instruction">Join a room by entering its 4-digit code or <br>Create a new one</p>
-                <input [(ngModel)]="inputRoom" id="inputRoom" placeholder="Enter Room Code" autocomplete="off">
-                <div id="button-container">
-                    <button id="join" (click)="joinRoom()">Join</button>
-                    <p id="or">OR</p>
-                    <button id="create" (click)="createRoom()">Create</button>
-                </div>
-                <p id="error" *ngIf="error$ | async as error" @fadeInOut>{{ error }}</p>
+        <div id="create-join">
+            <p id="instruction">Join a room by entering its 4-digit code or <br>Create a new one</p>
+            <input [(ngModel)]="inputRoom" id="inputRoom" placeholder="Enter Room Code" autocomplete="off">
+            <div id="button-container">
+                <button id="join" (click)="joinRoom()">Join</button>
+                <p id="or">OR</p>
+                <button id="create" (click)="createRoom()">Create</button>
             </div>
+            <p id="error" *ngIf="error$ | async as error" @fadeInOut>{{ error }}</p>
         </div>
-    </ng-template>
+    </div>
 </ng-template>
 
 

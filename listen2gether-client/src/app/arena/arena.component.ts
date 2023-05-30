@@ -29,7 +29,6 @@ export class ArenaComponent {
   room = '';
   inputRoom = '';
   error$ = new BehaviorSubject<string>('');
-  authLoading$ = this.loadingService.isAuthLoading$;
 
   constructor(
       private socketSerivce: SocketService, 

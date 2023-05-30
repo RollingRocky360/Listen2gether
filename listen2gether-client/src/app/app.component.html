@@ -1,5 +1,5 @@
 <router-outlet></router-outlet>
-<div *ngIf="authLoading$ | async" 
+<div *ngIf="(user$ | async) === undefined" 
     class="loading-title" 
     style="width: 96%; height: 96vdh; display: grid; place-items: center;"
     >

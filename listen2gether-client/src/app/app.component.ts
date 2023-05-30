@@ -9,9 +9,9 @@ import { LoadingService } from './services/loading.service';
 })
 export class AppComponent implements OnInit {
   title = 'listen2gether-client';
-  authLoading$ = this.loadingService.isAuthLoading$;
+  user$ = this.userService.user$;
 
-  constructor(private userService: UserService, private loadingService: LoadingService) { }
+  constructor(private userService: UserService) { }
 
   ngOnInit(): void {
     this.userService.loadUser();

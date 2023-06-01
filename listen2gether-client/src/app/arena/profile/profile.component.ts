@@ -8,7 +8,7 @@ import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/interfaces/user';
 
 let HOST_URL = 'http://localhost:3000'
-HOST_URL = 'https://listen2gether-api.gagansaics.repl.co';
+HOST_URL = 'https://listen2gether-api-zfqh.onrender.com';
 
 @Component({
   selector: 'app-profile',

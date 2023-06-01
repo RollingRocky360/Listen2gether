@@ -11,7 +11,7 @@ import { API_URL } from '../../../host-config';
 import { LoadingService } from './loading.service';
 
 let BASE_URL = 'http://localhost:3000';
-BASE_URL = 'https://listen2gether-api.gagansaics.repl.co';
+BASE_URL = 'https://listen2gether-api-zfqh.onrender.com';
 
 interface AuthResponse {
   _id: string,

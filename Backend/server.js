@@ -4,6 +4,7 @@ const JWT_SECRET = process.env.JWT_SECRET
 const DB_USER = process.env.DB_USER
 const DB_PASSWORD = process.env.DB_PASSWORD
 
+const fetch = require('node-fetch')
 const express = require('express')
 const cors = require('cors')
 const multer = require('multer')
@@ -16,7 +17,7 @@ const http = require('http')
 // DB initialization
 
 const { MongoClient, ObjectId } = require('mongodb')
-const db_uri = `mongodb://localhost:27017`;
+const db_uri = `mongodb+srv://${DB_USER}:${DB_PASSWORD}@cluster0.wkngwm2.mongodb.net/?retryWrites=true&w=majority`;
 const client = new MongoClient(db_uri);
 const db = client.db('test');
 const users = db.collection('users');
@@ -28,10 +29,17 @@ const app = express()
 const upload = multer();
 
 
+// Test Route
+
+app.get('/test', async (req, res) => {
+    res.json({ hello: 1 })
+})
+
+
 // middleware
 
 app.use(cors({
-    origin: '*'
+    origin: 'https://rollingrocky360.github.io'
 }))
 
 app.use(express.json())
@@ -192,11 +200,6 @@ app.post('/username-update', async (req, res) => {
     console.log('username updated to ', user.username);
     res.json(user);
 })
-
-app.get('/test', (req, res) => {
-    res.json({ hello: 1 })
-})
-// app.listen(3000, HOST)
 
 const httpServer = http.createServer(app)
 module.exports = httpServer

@@ -13,7 +13,7 @@ const io = new Server(httpServer, {
 
 function handleConnection(socket) {
 
-    const { _room_id, _user } = socket.handshake.query;
+    let { _room_id, _user } = socket.handshake.query;
     console.log('connected');
 
     socket.on('error', console.log);

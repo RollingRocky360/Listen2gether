@@ -1,6 +1,6 @@
 const { Server } = require('socket.io');
 const ytdl = require('ytdl-core');
-const ytsr = require('alternative-ytsr');
+const ytsr = require('yt-search');
 const httpServer = require('./server')
 
 const rooms = new Map();
@@ -12,9 +12,8 @@ const io = new Server(httpServer, {
 });
 
 function handleConnection(socket) {
-    let _room_id;
-    let _user;
 
+    const { _room_id, _user } = socket.handshake.query;
     console.log('connected');
 
     socket.on('error', console.log);
@@ -47,17 +46,16 @@ function handleConnection(socket) {
     })
     
     socket.on('search', async msg => {
-        const searchResponse = await ytsr(msg.keyword, { limit: 10 });
-        const results = searchResponse.items
-            .filter(item => item.type === 'video')
-            .map(item => {
+        const searchResponse = await ytsr(msg.keyword);
+        const results = searchResponse.videos
+            .map(video => {
                 return {
-                    id: item.id,
-                    name: item.title,
-                    url: item.url,
-                    author: item.author.name,
-                    thumbnailUrl: item.thumbnails[item.thumbnails.length-1].url,
-                    dur: item.duration,
+                    id: video.id,
+                    name: video.title,
+                    url: video.url,
+                    author: video.author.name,
+                    thumbnailUrl: video.thumbnail,
+                    dur: video.seconds,
                 }
             })
 

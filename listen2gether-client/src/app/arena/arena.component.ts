@@ -50,6 +50,7 @@ export class ArenaComponent {
       return false;
     } else {
       this.error$.next('');
+      this.socketSerivce.socket.io.opts.query!['_room_id'] = this.inputRoom;
       return true;
     };  
   }

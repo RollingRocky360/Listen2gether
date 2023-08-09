@@ -39,7 +39,7 @@ app.get('/test', async (req, res) => {
 // middleware
 
 app.use(cors({
-    origin: 'https://rollingrocky360.github.io'
+    origin: ['https://rollingrocky360.github.io', 'http://localhost']
 }))
 
 app.use(express.json())

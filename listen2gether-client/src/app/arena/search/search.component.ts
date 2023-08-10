@@ -52,9 +52,9 @@ export class SearchComponent {
     })
   }
 
-  search(e: KeyboardEvent) {
+  search(e: KeyboardEvent | MouseEvent, tap: boolean = false) {
     
-    if (e.code !== 'Enter') return;
+    if (!tap && (e as KeyboardEvent).code !== 'Enter') return;
     if (!this.keyWord.length) return;
 
     this.loadingService.setSearchLoad();

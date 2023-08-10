@@ -21,8 +21,8 @@ export class ChatComponent implements OnDestroy{
     this.messages$ = this.messageService.messages$;
   }
 
-  send(e: KeyboardEvent) {
-    if (e.code !== 'Enter') return;
+  send(e: KeyboardEvent | MouseEvent, tap: boolean = false) {
+    if (!tap && (e as KeyboardEvent).code !== 'Enter') return;
     if (!this.message.trim().length) return;
 
     console.log('message')

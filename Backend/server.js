@@ -17,7 +17,7 @@ const http = require('http')
 // DB initialization
 
 const { MongoClient, ObjectId } = require('mongodb')
-const db_uri = `mongodb+srv://${DB_USER}:${DB_PASSWORD}@cluster0.wkngwm2.mongodb.net/?retryWrites=true&w=majority`;
+let db_uri = `mongodb+srv://${DB_USER}:${DB_PASSWORD}@cluster0.wkngwm2.mongodb.net/?retryWrites=true&w=majority`;
 const client = new MongoClient(db_uri);
 const db = client.db('test');
 const users = db.collection('users');

@@ -78,6 +78,7 @@ button:hover {
 
 #detailedCurrentPlaying {
     position: absolute;
+    width: 35%;
     left: 0;
 }
 
@@ -105,3 +106,31 @@ button:hover {
 }
 
 
+@media screen and (max-width: 480px) {
+    :host {
+        grid-row: 3/4;
+        flex-direction: column;
+        margin: auto;
+        gap: 2rem;
+        align-self: start;
+        height: 70%;
+    }
+
+    #progress-container {
+        width: 95%;
+    }
+    #progress-container button {
+        width: 2rem;
+    }
+
+    #bar-container {
+        width: 60%;
+    }
+
+    #currentPlaying, #detailedCurrentPlaying {
+        grid-row: 3/4;    
+        grid-column: 1/2;
+        width: 80%;
+        top: 0;
+    }
+}

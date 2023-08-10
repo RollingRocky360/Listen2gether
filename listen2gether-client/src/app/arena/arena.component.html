@@ -1,7 +1,9 @@
 <ng-template [ngIf]="room">
-    <app-search class="container"></app-search>
-    <app-queue class="container"></app-queue>
-    <app-chat class="container"></app-chat>
+    <div id="containers-container">
+        <app-search class="container"></app-search>
+        <app-queue class="container"></app-queue>
+        <app-chat class="container"></app-chat>
+    </div>
     <app-progress></app-progress>
     <app-options (leaveEvent)="room = ''"></app-options>
 </ng-template>

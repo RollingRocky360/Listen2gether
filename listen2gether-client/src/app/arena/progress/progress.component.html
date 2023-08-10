@@ -10,7 +10,6 @@
 <ng-template #noSkeleton>
     <app-song 
         *ngIf="alternator > 0 else noSkeleton2"
-        [style.width.%]="35" 
         [style.padding]="0"
         [style.margin]="0"
         [song]="song!"
@@ -21,7 +20,6 @@
 
 <ng-template #noSkeleton2>
     <app-song 
-        [style.width.%]="35" 
         [style.padding]="0"
         [style.margin]="0"
         [song]="song!"

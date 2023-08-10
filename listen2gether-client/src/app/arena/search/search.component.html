@@ -1,16 +1,16 @@
 
 <div class="input-container" id="search-container">
-    <span class="loading" *ngIf="isSearchLoading$ | async else noLoading"></span>
-    <ng-template #noLoading>
-        <span class="material-icons">
-            search
-        </span>
-    </ng-template>
     <input 
         (keyup)="search($event)" 
         [(ngModel)]="keyWord" 
         placeholder="Search YouTube"
         spellcheck="false">
+    <span class="loading" *ngIf="isSearchLoading$ | async else noLoading"></span>
+    <ng-template #noLoading>
+        <span class="material-icons" (click)="search($event, true)">
+            search
+        </span>
+    </ng-template>
 </div>
 
 <div id="results" [@wave]="(searchResults$ | async)!.length ? 'added' : 'removed'">

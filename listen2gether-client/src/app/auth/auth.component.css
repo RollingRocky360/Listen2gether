@@ -129,5 +129,10 @@ button {
     animation: load 1s infinite linear;
 }
 
+@media screen and (max-width: 480px) {
+    form {
+        width: 85%;
+    }
+}
 
 

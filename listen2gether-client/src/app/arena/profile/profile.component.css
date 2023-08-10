@@ -8,7 +8,7 @@
 }
 
 :host #pfp-container {
-    width: 9rem;
+    width: 40%;
     aspect-ratio: 1;
     position: relative;
     display: grid;
@@ -17,7 +17,7 @@
 }
 
 :host #pfp {
-    width: 9rem;
+    width: 100%;
     aspect-ratio: 1;
     background-color: #afb2ba;
     color: #242731;
@@ -73,4 +73,19 @@
 
 :host #username:focus {
     background-color: #242731;
+}
+
+@media screen and (max-width: 480px) {
+    :host {
+        width: 100%;
+        height: unset;
+    }
+
+    :host #pfp {
+        font-size: 3rem;
+    }
+
+    :host #username {
+        font-size: 1.6rem;
+    }
 }

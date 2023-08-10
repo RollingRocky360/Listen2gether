@@ -22,7 +22,7 @@
     "jsonwebtoken": "^9.0.0",
     "mongodb": "^5.2.0",
     "multer": "^1.4.5-lts.1",
-    "sharp": "^0.32.1",
+    "sharp": "^0.32.4",
     "socket.io": "^4.6.1",
     "yt-search": "^2.10.4",
     "ytdl-core": "^4.11.4"

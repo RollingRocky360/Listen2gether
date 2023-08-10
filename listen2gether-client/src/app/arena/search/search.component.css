@@ -22,7 +22,7 @@ input:focus::placeholder {
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 0.3rem;
+    gap: 3%;
     scrollbar-width: 0px;
     overflow-y: auto;
     padding: 1.0rem 0;

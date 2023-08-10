@@ -7,11 +7,9 @@ import { filter, catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { AuthError } from '../interfaces/autherror';
 
-import { API_URL } from '../../../host-config';
 import { LoadingService } from './loading.service';
 
-let BASE_URL = 'http://localhost:3000';
-BASE_URL = 'https://listen2gether-api-zfqh.onrender.com';
+let BASE_URL = 'https://listen2gether-api-ti3j.onrender.com';
 
 interface AuthResponse {
   _id: string,

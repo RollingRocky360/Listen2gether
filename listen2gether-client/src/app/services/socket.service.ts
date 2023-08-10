@@ -5,8 +5,7 @@ import { io } from 'socket.io-client';
 import { UserService } from './user.service';
 
 
-let SOCKET_URL = 'ws://localhost:3000'
-SOCKET_URL = 'wss://listen2gether-api-zfqh.onrender.com'
+let SOCKET_URL = 'wss://listen2gether-api-ti3j.onrender.com'
 
 @Injectable({
   providedIn: 'root'

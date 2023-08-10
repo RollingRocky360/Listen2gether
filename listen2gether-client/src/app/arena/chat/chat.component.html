@@ -27,12 +27,12 @@
 </div>
 
 <div class="input-container">
-    <span class="material-icons" [style.opacity]=".7">
-        send
-    </span>
     <input 
         (keyup)="send($event)" 
         [(ngModel)]="message" 
         placeholder="Type Message"
         spellcheck="false">
+    <span class="material-icons" [style.opacity]=".7" (click)="send($event, true)">
+        send
+    </span>
 </div>

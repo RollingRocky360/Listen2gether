@@ -78,3 +78,16 @@
 #leave:hover {
     background-color: #7f848e1e;
 }
+
+@media screen and (max-width: 480px) {
+    :host {
+        grid-row: 2/3;
+        width: 100%;
+        align-items: center;
+        align-self: center;
+    }
+    
+    #leave {
+        height: 3rem;
+    }
+}

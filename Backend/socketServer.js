@@ -7,7 +7,7 @@ const rooms = new Map();
 
 const io = new Server(httpServer, {
     cors: {
-        origin: '*',
+        origin: 'https://rollingrocky360.github.io',
     }
 });
 

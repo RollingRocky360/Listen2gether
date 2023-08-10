@@ -4,11 +4,10 @@ const JWT_SECRET = process.env.JWT_SECRET
 const DB_USER = process.env.DB_USER
 const DB_PASSWORD = process.env.DB_PASSWORD
 
-const fetch = require('node-fetch')
 const express = require('express')
 const cors = require('cors')
 const multer = require('multer')
-const sharp = require('sharp')
+const jimp = require('jimp')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const http = require('http')
@@ -145,12 +144,10 @@ app.post('/pfp-upload', upload.single('pfp'), async (req, res) => {
         return;
     }
 
-    const img = (
-        await sharp(req.file.buffer)
-                .resize(100, 100)
-                .toFormat('jpg')
-                .toBuffer()
-    ).toString('base64');
+    const image = await jimp.read(req.file.buffer)
+    img = await image
+        .resize(100, 100)
+        .getBase64Async(jimp.MIME_JPEG);
 
     const pfpEncoded = 'data:image/jpg;base64, ' + img;
     await users.updateOne({ _id: new ObjectId(id) }, { $set: { pfp: pfpEncoded }});

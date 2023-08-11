@@ -6,7 +6,7 @@ import { UserService } from '../services/user.service';
 import { LoadingService } from '../services/loading.service';
 
 let HOST_URL = 'http://localhost:3000'
-HOST_URL = 'https://listen2gether-api-zfqh.onrender.com';
+HOST_URL = 'https://listen2gether-api-ti3j.onrender.com';
 
 @Component({
   selector: 'app-arena',
